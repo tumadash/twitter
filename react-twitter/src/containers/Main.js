@@ -5,6 +5,9 @@ import {HeaderPanel} from "../components/HeaderPanel";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import RecipeReviewCard from "./RecipeReviewCard";
+import List from "@material-ui/core/List";
+import {GridList} from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -37,9 +40,12 @@ export const Main = () => {
             <HeaderPanel isOpen={open} handleDrawerOpen={handleDrawerOpen}/>
             <Menu isOpen={open} handleDrawerClose={handleDrawerClose}/>
             <main className={classes.content}>
-                <div className={classes.appBarSpacer} />
+                <div className={classes.appBarSpacer}/>
                 <Container maxWidth="lg" className={classes.container}>
-                    <RecipeReviewCard/>
+                    <Grid justify="center" spacing="12">
+                        {[0, 1, 2].map(value => (<Grid alignContent="center" key={value}><RecipeReviewCard/></Grid>))}
+
+                    </Grid>
                 </Container>
             </main>
 
