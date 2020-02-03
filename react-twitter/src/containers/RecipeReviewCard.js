@@ -65,7 +65,7 @@ export default function RecipeReviewCard() {
             />
             <CardMedia
                 className={classes.media}
-                image="/static/images/cards/paella.jpg"
+                image="https://kbdevstorage1.blob.core.windows.net/asset-blobs/19641_en_1"
                 title="Paella dish"
             />
             <CardContent>
