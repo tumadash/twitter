@@ -4,10 +4,9 @@ import {Menu} from "../components/Menu";
 import {HeaderPanel} from "../components/HeaderPanel";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
-import RecipeReviewCard from "./RecipeReviewCard";
-import List from "@material-ui/core/List";
-import {GridList} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
+import {News} from "./News";
+import {connect} from "react-redux";
+import {HOME} from "../store/stateMenu/enum";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -25,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export const Main = () => {
+const Main = ({menu}) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -34,6 +33,12 @@ export const Main = () => {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    const getContainer = () =>{
+        switch (menu) {
+            case HOME: return <News news={[0,1,2]}/>;
+            default: return <div/>
+        }
+    };
     return (
         <div className={classes.root}>
             <CssBaseline/>
@@ -41,13 +46,18 @@ export const Main = () => {
             <Menu isOpen={open} handleDrawerClose={handleDrawerClose}/>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer}/>
-                <Container maxWidth="lg" className={classes.container}>
-                    <Grid justify="center" spacing="12">
-                        {[0, 1, 2].map(value => (<Grid alignContent="center" key={value}><RecipeReviewCard/></Grid>))}
-
-                    </Grid>
+                <Container maxWidth="lg">
+                    {getContainer()}
                 </Container>
             </main>
-
         </div>);
 };
+
+const mapStateToProps = state => ({
+    menu: state.menu
+});
+
+export default connect(
+    mapStateToProps
+)(Main);
+
