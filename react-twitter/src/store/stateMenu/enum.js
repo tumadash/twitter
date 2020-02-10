@@ -1,4 +1,4 @@
-export const PROFILE = 'PROFILE';
-export const HOME = 'HOME';
-export const EXPLORE = 'EXPLORE';
-export const OUT = 'OUT';
+export const PROFILE = 'Profile';
+export const HOME = 'Home';
+export const EXPLORE = 'Explore';
+export const OUT = 'Out';

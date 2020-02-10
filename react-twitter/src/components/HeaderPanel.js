@@ -6,6 +6,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import {connect} from "react-redux";
 
 const drawerWidth = 240;
 
@@ -39,7 +40,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const HeaderPanel = ({handleDrawerOpen, isOpen}) => {
+const HeaderPanel = ({main, handleDrawerOpen, isOpen}) => { //TO-DO
     const classes = useStyles();
     return <AppBar position="absolute" className={clsx(classes.appBar, isOpen && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
@@ -58,3 +59,11 @@ export const HeaderPanel = ({handleDrawerOpen, isOpen}) => {
         </Toolbar>
     </AppBar>
 };
+
+const mapStateToProps = state => ({
+    menu: state.menu
+});
+
+export default connect(
+    mapStateToProps
+)(HeaderPanel);

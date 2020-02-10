@@ -1,12 +1,13 @@
 import React from 'react';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {Menu} from "../components/Menu";
-import {HeaderPanel} from "../components/HeaderPanel";
+import HeaderPanel from "../components/HeaderPanel";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import {News} from "./News";
 import {connect} from "react-redux";
-import {HOME} from "../store/stateMenu/enum";
+import {EXPLORE, HOME, PROFILE} from "../store/stateMenu/enum";
+import {Profile} from "./Profile";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -14,9 +15,7 @@ const useStyles = makeStyles(theme => ({
     },
     appBarSpacer: theme.mixins.toolbar,
     content: {
-        flexGrow: 1,
-        height: '100vh',
-        overflow: 'auto',
+        width: '100%'
     },
     container: {
         // paddingTop: theme.spacing(4),
@@ -36,6 +35,8 @@ const Main = ({menu}) => {
     const getContainer = () =>{
         switch (menu) {
             case HOME: return <News news={[0,1,2]}/>;
+            case EXPLORE: return <News news={[0]}/>;
+            case PROFILE: return <Profile/>;
             default: return <div/>
         }
     };
@@ -45,10 +46,10 @@ const Main = ({menu}) => {
             <HeaderPanel isOpen={open} handleDrawerOpen={handleDrawerOpen}/>
             <Menu isOpen={open} handleDrawerClose={handleDrawerClose}/>
             <main className={classes.content}>
-                <div className={classes.appBarSpacer}/>
-                <Container maxWidth="lg">
+                {/*<div className={classes.appBarSpacer}/>*/}
+
                     {getContainer()}
-                </Container>
+
             </main>
         </div>);
 };
