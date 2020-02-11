@@ -4,6 +4,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import {red} from "@material-ui/core/colors";
 import {Container, TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+import SaveIcon from "@material-ui/icons/Save";
 
 const useStyles = makeStyles(theme => ({
     avatar: {
@@ -17,12 +20,16 @@ const useStyles = makeStyles(theme => ({
         maxWidth: "100%",
         // maxHeight: "50%",
         padding: "5%",
+        paddingBottom: "3%",
         background: "linear-gradient(to bottom, #3f51b5, #fafafa)"
     },
-    container: {
+    headContainer: {
         width: "100%",
         maxWidth: "100%",
         padding: 0
+    },
+    bodyContainer: {
+        display: 'flex'
     },
     username: {
         color: 'rgba(0,0,0,0.71)',
@@ -30,12 +37,35 @@ const useStyles = makeStyles(theme => ({
     },
     status: {
         color: 'rgba(0,0,0,0.71)',
+    },
+    panel: {
+        color: '#3f51b5',
+    },
+    info: {
+        alignSelf: 'stretch',
+        width: '40%',
+        margin: '0 auto',
+        padding: '25px',
+        flexDirection: 'column',
+        display: 'flex'
+    },
+    footer: {
+        paddingTop: '25px',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        flexGrow: 1
+    },
+    input: {
+        width: '100%'
+    },
+    saveButton: {
+        marginTop: 'auto'
     }
 }));
 
 export const Profile = () => {
     const classes = useStyles();
-    return (<Container  className={classes.container}>
+    return (<Container className={classes.headContainer}>
         <Container className={classes.header}><Avatar
             src="https://kbdevstorage1.blob.core.windows.net/asset-blobs/19852_en_1"
             className={classes.avatar}/>
@@ -43,10 +73,25 @@ export const Profile = () => {
             <Typography align="center" variant={"h6"} className={classes.status}>Гений, миллиардер, плейбой,
                 филантроп</Typography>
         </Container>
-        <Container>
-            <TextField label={"E-mail"}></TextField>
-            <TextField label={"Login"}></TextField>
-            <TextField label={"Password"} type={"password"}></TextField>
+        <Container className={classes.bodyContainer}>
+            <Paper className={classes.info}>
+                <Typography align="center" variant={"h6"} className={classes.panel}>Basic information</Typography>
+                <div><TextField className={classes.input} label={"Full Name"}></TextField></div>
+                <div><TextField className={classes.input} label={"E-mail"}></TextField></div>
+                <div><TextField className={classes.input} label={"Login"}></TextField></div>
+                <div><TextField className={classes.input} label={"Password"} type={"password"}></TextField></div>
+                <div className={classes.footer}><Button variant={'contained'} color={'primary'}
+                                                        startIcon={<SaveIcon/>}>Save</Button></div>
+            </Paper>
+            <Paper className={classes.info}>
+                <Typography align="center" variant={"h6"} className={classes.panel}>Additional information</Typography>
+                <div><TextField className={classes.input} label={"Gender"}></TextField></div>
+                <div><TextField className={classes.input} label={"City"}></TextField></div>
+                <div><TextField className={classes.input} label={"About"} multiline={true} rows={3}></TextField></div>
+                <div className={classes.footer}><Button className={classes.saveButton} variant={'contained'}
+                                                        color={'primary'}
+                                                        startIcon={<SaveIcon/>}>Save</Button></div>
+            </Paper>
         </Container>
     </Container>);
 };
