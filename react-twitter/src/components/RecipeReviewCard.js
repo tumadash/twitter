@@ -38,6 +38,9 @@ const useStyles = makeStyles(theme => ({
     avatar: {
         backgroundColor: red[500],
     },
+    content: {
+        textOverflow: 'collapse'
+    }
 }));
 
 export default function RecipeReviewCard({newsItem}) {
@@ -56,11 +59,6 @@ export default function RecipeReviewCard({newsItem}) {
                         {newsItem.user.avatar}
                     </Avatar>
                 }
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon/>
-                    </IconButton>
-                }
                 title={newsItem.user.name}
                 subheader={newsItem.date}
             />
@@ -69,17 +67,13 @@ export default function RecipeReviewCard({newsItem}) {
                 image={newsItem.img}
             />
             <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    This impressive paella is a perfect party dish and a fun meal to cook together with your
-                    guests. Add 1 cup of frozen peas along with the mussels, if you like.
+                <Typography variant="body2" color="textSecondary" component="p" className={classes.content}>
+                    {newsItem.text}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
                     <FavoriteIcon/>
-                </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon/>
                 </IconButton>
                 <IconButton
                     className={clsx(classes.expand, {
