@@ -1,7 +1,6 @@
 import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import {makeStyles} from "@material-ui/core/styles";
-import {red} from "@material-ui/core/colors";
 import {Container, TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
@@ -18,7 +17,6 @@ const useStyles = makeStyles(theme => ({
     header: {
         width: "100%",
         maxWidth: "100%",
-        // maxHeight: "50%",
         padding: "5%",
         paddingBottom: "3%",
         background: "linear-gradient(to bottom, #3f51b5, #fafafa)"
@@ -76,18 +74,18 @@ export const Profile = () => {
         <Container className={classes.bodyContainer}>
             <Paper className={classes.info}>
                 <Typography align="center" variant={"h6"} className={classes.panel}>Basic information</Typography>
-                <div><TextField className={classes.input} label={"Full Name"}></TextField></div>
-                <div><TextField className={classes.input} label={"E-mail"}></TextField></div>
-                <div><TextField className={classes.input} label={"Login"}></TextField></div>
-                <div><TextField className={classes.input} label={"Password"} type={"password"}></TextField></div>
+                <div><TextField className={classes.input} label={"Full Name"}/></div>
+                <div><TextField className={classes.input} label={"E-mail"}/></div>
+                <div><TextField className={classes.input} label={"Login"}/></div>
+                <div><TextField className={classes.input} label={"Password"} type={"password"}/></div>
                 <div className={classes.footer}><Button variant={'contained'} color={'primary'}
                                                         startIcon={<SaveIcon/>}>Save</Button></div>
             </Paper>
             <Paper className={classes.info}>
                 <Typography align="center" variant={"h6"} className={classes.panel}>Additional information</Typography>
-                <div><TextField className={classes.input} label={"Gender"}></TextField></div>
-                <div><TextField className={classes.input} label={"City"}></TextField></div>
-                <div><TextField className={classes.input} label={"About"} multiline={true} rows={3}></TextField></div>
+                <div><TextField className={classes.input} label={"Gender"}/></div>
+                <div><TextField className={classes.input} label={"City"}/></div>
+                <div><TextField className={classes.input} label={"About"} multiline={true} rows={3}/></div>
                 <div className={classes.footer}><Button className={classes.saveButton} variant={'contained'}
                                                         color={'primary'}
                                                         startIcon={<SaveIcon/>}>Save</Button></div>
