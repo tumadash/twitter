@@ -8,6 +8,7 @@ import {EXPLORE, HOME, PROFILE} from "../store/stateMenu/enum";
 import {Profile} from "./Profile";
 import {Home} from "./Home";
 import {Explore} from "./Explore";
+import history from "../service/history";
 
 const useStyles = makeStyles(theme => ({
     root: {

@@ -6,6 +6,7 @@ import {ExitToApp, Home, People, Person} from '@material-ui/icons';
 import {connect} from "react-redux";
 import {setStateMenu} from "../store/stateMenu/actions";
 import {EXPLORE, HOME, PROFILE, OUT} from "../store/stateMenu/enum";
+import history from "../service/history";
 
 const MenuButtons = ({setStateMenu}) => (
     <div>
@@ -33,9 +34,7 @@ const MenuButtons = ({setStateMenu}) => (
             </ListItemIcon>
             <ListItemText primary="Explore"/>
         </ListItem>
-        <ListItem button onClick={() => {
-            setStateMenu(OUT)
-        }}>
+        <ListItem button onClick={out}>
             <ListItemIcon>
                 <ExitToApp/>
             </ListItemIcon>
@@ -43,6 +42,11 @@ const MenuButtons = ({setStateMenu}) => (
         </ListItem>
     </div>
 );
+
+const out = () => {
+    history.push("/#/");
+    history.go();
+};
 
 const mapStateToProps = state => ({});
 

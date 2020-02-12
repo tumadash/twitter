@@ -27,7 +27,7 @@ const Copyright = () => {
 };
 
 const login = () =>{
-    history.push("/main");
+    history.push("/#/main");
 };
 
 const useStyles = makeStyles(theme => ({
