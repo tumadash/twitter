@@ -54,7 +54,7 @@ export const SignIn = () => {
                 <Typography component="h1" variant="h5">
                     Twitter
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -67,7 +67,6 @@ export const SignIn = () => {
                         autoFocus
                     />
                     <TextField
-                        error={true}
                         variant="outlined"
                         margin="normal"
                         required

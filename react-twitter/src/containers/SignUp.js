@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -36,9 +36,16 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+
 export default function SignUp() {
     const classes = useStyles();
-
+    let [lastName, setLastName] = useState(undefined);
+    let [firstName, setFirstName] = useState(undefined);
+    let [email, setEmail] = useState(undefined);
+    let [password, setPassword] = useState(undefined);
+    const saveUser = (target) =>{
+        console.log(11, lastName, firstName, email, password);
+    };
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -49,12 +56,13 @@ export default function SignUp() {
                 <Typography component="h1" variant="h5">
                     Twitter
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} onSubmit={saveUser}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 autoComplete="fname"
                                 name="firstName"
+                                onChange={setFirstName}
                                 variant="outlined"
                                 required
                                 fullWidth
@@ -69,6 +77,7 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="lastName"
+                                onChange={setLastName}
                                 label="Last Name"
                                 name="lastName"
                                 autoComplete="lname"
@@ -80,6 +89,7 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="email"
+                                onChange={setEmail}
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
@@ -94,6 +104,7 @@ export default function SignUp() {
                                 label="Password"
                                 type="password"
                                 id="password"
+                                onChange={setPassword}
                                 autoComplete="current-password"
                             />
                         </Grid>
