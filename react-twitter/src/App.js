@@ -6,7 +6,7 @@ import Main from "./containers/Main"
 import {persistor, store} from "./store/store";
 import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react';
-import {SignIn} from "./containers/SignIn";
+import SignIn from "./containers/SignIn";
 import SignUp from "./containers/SignUp";
 
 export const App = () => {

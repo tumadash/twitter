@@ -2,8 +2,9 @@ import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import thunk from 'redux-thunk';
 import {persistReducer, persistStore} from 'redux-persist';
 import LocalStorage from 'redux-persist/lib/storage';
-import {user} from "./user/reducers";
+import {currentUser} from "./currentUser/reducers";
 import {menu} from "./stateMenu/reducers";
+import {users} from "./users/reducers";
 
 const persistConfig = {
     key: 'root',
@@ -15,8 +16,9 @@ const composedEnhancers = compose(
 );
 
 const listApp = combineReducers({
-    user,
-    menu
+    currentUser,
+    menu,
+    users
 });
 
 const persistedReducer = persistReducer(persistConfig, listApp);
