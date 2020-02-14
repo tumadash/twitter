@@ -13,7 +13,7 @@ const friendsArray = {
 export const friends = (state = [], action) => {
     switch (action.type) {
         case GET_FRIENDS:
-            return [...friendsArray];
+            return state;
         default:
             return state
     }

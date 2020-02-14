@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     header: {
         width: "100%",
         maxWidth: "100%",
-        padding: "5%",
+        padding: "10px",
         paddingBottom: "3%",
         background: "linear-gradient(to bottom, #3f51b5, #fafafa)"
     },
