@@ -54,7 +54,6 @@ const SignIn = ({users, setCurrentUser}) => {
     };
 
     const login = () => {
-        debugger;
         let user = users.filter(obj => {
             return obj.email === email
         })[0];
