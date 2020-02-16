@@ -1,18 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import {red} from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {connect} from "react-redux";
+import {dislike, like} from "../store/news/actions";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -41,15 +40,15 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function RecipeReviewCard({newsItem}) {
+const RecipeReviewCard = ({newsItem, like, dislike, currentUser}) => {
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
+    let likeParam = false;
+    if (newsItem.followers.includes(currentUser.email)) {
+        let likeParam = true;
+    }
+    let [isLike, setLikeEvents] = useState(likeParam);
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
-
-    const formatDate = (date) =>{
+    const formatDate = (date) => {
         date = new Date(date);
         let monthNames = [
             "January", "February", "March",
@@ -58,6 +57,18 @@ export default function RecipeReviewCard({newsItem}) {
             "November", "December"
         ];
         return date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear();
+    };
+
+    const setLikeEvent = () => {
+        if (isLike) {
+            dislike({email: currentUser.email, id: newsItem.id});
+            setLikeEvents(false);
+        } else {
+            like({email: currentUser.email, id: newsItem.id});
+            setLikeEvents(true);
+        }
+
+
     };
 
     return (
@@ -81,25 +92,26 @@ export default function RecipeReviewCard({newsItem}) {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon/>
+                <IconButton aria-label="add to favorites" onClick={setLikeEvent}>
+                    <FavoriteIcon style={{color: isLike ? 'red' : ''}}/>
                 </IconButton>
-                <IconButton
-                    className={clsx(classes.expand, {
-                        [classes.expandOpen]: expanded,
-                    })}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                >
-                    <ExpandMoreIcon/>
-                </IconButton>
+                <Typography variant="body2" color="textSecondary" component="p" className={classes.content}>
+                    {newsItem.followers.length}
+                </Typography>
             </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-
-                </CardContent>
-            </Collapse>
         </Card>
     );
 }
+const mapStateToProps = state => ({
+    currentUser: state.currentUser
+});
+
+const mapDispatchToProps = dispatch => ({
+    like: state => dispatch(like(state)),
+    dislike: state => dispatch(dislike(state))
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(RecipeReviewCard);

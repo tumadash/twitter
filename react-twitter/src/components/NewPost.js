@@ -73,7 +73,7 @@ const NewPost = ({newPostState, setOpen, currentUser, addNews}) => {
     const save = () => {
         const date = Date.now();
         const id = date + currentUser.email;
-        const news = {id, image, text, date, user: currentUser};
+        const news = {id, image, text, date, user: currentUser, followers: []};
         // news.push(id, {image, text, date});
         addNews(news);
     };
