@@ -1,4 +1,4 @@
-import {ADD_NEWS, DISLIKE, GET_NEWS, LIKE} from './actions';
+import {ADD_NEWS, DELETE_NEWS, DISLIKE, GET_NEWS, LIKE} from './actions';
 
 function editNews(state, email, id, isLike) {
     let arrayNews = [...state];
@@ -20,7 +20,7 @@ function editNews(state, email, id, isLike) {
                 text: arrayNews[index].text,
                 date: arrayNews[index].date,
                 user: arrayNews[index].user,
-                followers:  arrayNews[index].followers.filter(
+                followers: arrayNews[index].followers.filter(
                     emailItem => emailItem !== email
                 )
             };
@@ -36,6 +36,10 @@ export const news = (state = [], action) => {
             return state;
         case ADD_NEWS:
             return [...state, action.news];
+        case DELETE_NEWS:
+            return state.filter(
+                news => news.id !== action.id
+            );
         case LIKE:
             return editNews(state, action.item.email, action.item.id, true);
         case DISLIKE:

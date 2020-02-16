@@ -10,8 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import {red} from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import CloseIcon from '@material-ui/icons/Close';
 import {connect} from "react-redux";
-import {dislike, like} from "../store/news/actions";
+import {deleteNews, dislike, like} from "../store/news/actions";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -40,7 +41,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const RecipeReviewCard = ({newsItem, like, dislike, currentUser}) => {
+const RecipeReviewCard = ({newsItem, like, dislike, currentUser, deleteNews}) => {
     const classes = useStyles();
     let likeParam = false;
     if (newsItem.followers.includes(currentUser.email)) {
@@ -70,7 +71,9 @@ const RecipeReviewCard = ({newsItem, like, dislike, currentUser}) => {
 
 
     };
-
+    const deleteNewsEvent = () =>{
+        deleteNews(newsItem.id);
+    };
     return (
         <Card className={classes.root}>
             <CardHeader
@@ -81,6 +84,12 @@ const RecipeReviewCard = ({newsItem, like, dislike, currentUser}) => {
                 }
                 title={newsItem.user.lastName + ' ' + newsItem.user.firstName}
                 subheader={formatDate(newsItem.date)}
+                action={
+                    newsItem.user.email === currentUser.email ?
+                    <IconButton aria-label="settings" onClick={deleteNewsEvent}>
+                        <CloseIcon />
+                    </IconButton> : ''
+                }
             />
             <CardMedia
                 className={classes.media}
@@ -108,7 +117,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     like: state => dispatch(like(state)),
-    dislike: state => dispatch(dislike(state))
+    dislike: state => dispatch(dislike(state)),
+    deleteNews: id => dispatch(deleteNews(id))
 });
 
 export default connect(

@@ -38,7 +38,7 @@ const News = ({news, setOpen}) => {
         </Button>
         <NewPost/>
         <Grid>
-            {news.length !== 0 ? news.map((value) => (<Grid key={value}><RecipeReviewCard newsItem={value}/></Grid>)) :
+            {news.length !== 0 ? news.map((value) => (<Grid key={value.id}><RecipeReviewCard newsItem={value}/></Grid>)) :
                 <Typography variant={"h3"} className={classes.empty}>Новостей нет</Typography>}
         </Grid>
     </div>);
