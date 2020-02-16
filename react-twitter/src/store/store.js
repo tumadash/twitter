@@ -5,6 +5,8 @@ import LocalStorage from 'redux-persist/lib/storage';
 import {currentUser} from "./currentUser/reducers";
 import {menu} from "./stateMenu/reducers";
 import {users} from "./users/reducers";
+import {newPostState} from "./newPostState/reducers";
+import {news} from "./news/reducers";
 
 const persistConfig = {
     key: 'root',
@@ -18,7 +20,9 @@ const composedEnhancers = compose(
 const listApp = combineReducers({
     currentUser,
     menu,
-    users
+    users,
+    newPostState,
+    news
 });
 
 const persistedReducer = persistReducer(persistConfig, listApp);

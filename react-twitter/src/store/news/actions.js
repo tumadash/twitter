@@ -1,7 +1,12 @@
 export const GET_NEWS = 'GET_NEWS';
+export const ADD_NEWS = 'ADD_NEWS';
 
 export function getNews(friends) {
     return {type: GET_NEWS, friends}
+}
+export function addNews(news) {
+    console.log(news);
+    return {type: ADD_NEWS, news}
 }
 
 const users = [{
@@ -35,14 +40,5 @@ const users = [{
         }
     ]
 }];
-const formatDate = (date) =>{
-    date = new Date(date);
-    let monthNames = [
-        "January", "February", "March",
-        "April", "May", "June", "July",
-        "August", "September", "October",
-        "November", "December"
-    ];
-    return date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear();
-};
+
 

@@ -49,6 +49,17 @@ export default function RecipeReviewCard({newsItem}) {
         setExpanded(!expanded);
     };
 
+    const formatDate = (date) =>{
+        date = new Date(date);
+        let monthNames = [
+            "January", "February", "March",
+            "April", "May", "June", "July",
+            "August", "September", "October",
+            "November", "December"
+        ];
+        return date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear();
+    };
+
     return (
         <Card className={classes.root}>
             <CardHeader
@@ -57,12 +68,12 @@ export default function RecipeReviewCard({newsItem}) {
                         {newsItem.user.avatar}
                     </Avatar>
                 }
-                title={newsItem.user.name}
-                subheader={newsItem.date}
+                title={newsItem.user.lastName + ' ' + newsItem.user.firstName}
+                subheader={formatDate(newsItem.date)}
             />
             <CardMedia
                 className={classes.media}
-                image={newsItem.img}
+                image={newsItem.image}
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p" className={classes.content}>
