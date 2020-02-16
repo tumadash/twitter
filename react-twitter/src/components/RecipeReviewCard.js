@@ -44,7 +44,7 @@ const RecipeReviewCard = ({newsItem, like, dislike, currentUser}) => {
     const classes = useStyles();
     let likeParam = false;
     if (newsItem.followers.includes(currentUser.email)) {
-        let likeParam = true;
+        likeParam = true;
     }
     let [isLike, setLikeEvents] = useState(likeParam);
 
