@@ -60,7 +60,6 @@ const SignUp = ({addUser}) => {
         setPasswordState(e.target.value)
     };
     const saveUser = () => {
-        debugger;
         addUser({firstName, lastName, email, password});
         history.push("/#/");
     };
