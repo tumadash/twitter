@@ -1,17 +1,17 @@
 import React from "react";
 import News from "../components/News";
-import {addNews} from "../store/news/actions";
 import {connect} from "react-redux";
-import {setOpen} from "../store/newPostState/actions";
 
-const Home = ({news}) => {
-    return (<News news={news}/>);
+const Home = ({news, currentUser}) => {
+    const userNews = news.filter(
+        news => news.user.email === currentUser.email
+    );
+    return (<News news={userNews}/>);
 };
 const mapStateToProps = state => ({
-    news: state.news
+    news: state.news,
+    currentUser: state.currentUser
 });
-
-
 
 export default connect(
     mapStateToProps

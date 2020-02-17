@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 import {EXPLORE, HOME, PROFILE} from "../store/stateMenu/enum";
 import Profile from "./Profile";
 import Home from "./Home";
-import {Explore} from "./Explore";
+import Explore from "./Explore";
 
 const useStyles = makeStyles(theme => ({
     root: {
