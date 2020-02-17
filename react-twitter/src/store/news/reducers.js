@@ -35,7 +35,7 @@ export const news = (state = [], action) => {
         case GET_NEWS:
             return state;
         case ADD_NEWS:
-            return [...state, action.news];
+            return [action.news, ...state];
         case DELETE_NEWS:
             return state.filter(
                 news => news.id !== action.id

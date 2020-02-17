@@ -13,9 +13,10 @@ const useStyles = makeStyles(() => ({
     empty: {
         display: 'flex',
         color: '#757575',
-        height: 'calc(100vh - 64px)',
+        height: 'calc(100vh - 114px)',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        margin: "25px auto"
     },
     newPost: {
         position: 'absolute',
@@ -38,8 +39,9 @@ const News = ({news, setOpen}) => {
         </Button>
         <NewPost/>
         <Grid>
-            {news.length !== 0 ? news.map((value) => (<Grid key={value.id}><RecipeReviewCard newsItem={value}/></Grid>)) :
-                <Typography variant={"h3"} className={classes.empty}>Новостей нет</Typography>}
+            {news.length !== 0 ? news.map((value) => (
+                    <Grid key={value.id}><RecipeReviewCard newsItem={value}/></Grid>)) :
+                <Typography variant={"h3"} className={classes.empty}>There will be news</Typography>}
         </Grid>
     </div>);
 };

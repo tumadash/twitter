@@ -76,6 +76,8 @@ const NewPost = ({newPostState, setOpen, currentUser, addNews}) => {
         const news = {id, image, text, date, user: currentUser, followers: []};
         // news.push(id, {image, text, date});
         addNews(news);
+        setImageState('');
+        setTextState('');
     };
 
     return (<Dialog fullScreen open={newPostState} onClose={handleClose} TransitionComponent={Transition}>
