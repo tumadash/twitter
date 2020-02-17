@@ -7,9 +7,17 @@ import {connect} from "react-redux";
 import {setStateMenu} from "../store/stateMenu/actions";
 import {EXPLORE, HOME, PROFILE, OUT} from "../store/stateMenu/enum";
 import history from "../service/history";
+import {setCurrentUser} from "../store/currentUser/actions";
 
-const MenuButtons = ({setStateMenu}) => (
-    <div>
+const MenuButtons = ({setStateMenu, setCurrentUser}) => {
+
+    const out = () => {
+        setCurrentUser(null);
+        history.push("/#/");
+        history.go();
+    };
+
+    return (<div>
         <ListItem button onClick={() => {
             setStateMenu(PROFILE)
         }}>
@@ -40,18 +48,15 @@ const MenuButtons = ({setStateMenu}) => (
             </ListItemIcon>
             <ListItemText primary="Out"/>
         </ListItem>
-    </div>
-);
-
-const out = () => {
-    history.push("/#/");
-    history.go();
+    </div>);
 };
+
 
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-    setStateMenu: state => dispatch(setStateMenu(state))
+    setStateMenu: state => dispatch(setStateMenu(state)),
+    setCurrentUser: user => dispatch(setCurrentUser(user))
 });
 
 export default connect(

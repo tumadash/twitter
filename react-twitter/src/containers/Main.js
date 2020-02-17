@@ -8,6 +8,7 @@ import {EXPLORE, HOME, PROFILE} from "../store/stateMenu/enum";
 import Profile from "./Profile";
 import Home from "./Home";
 import Explore from "./Explore";
+import history from "../service/history";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -22,7 +23,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Main = ({menu}) => {
+const Main = ({menu, currentUser}) => {
+
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -43,6 +45,11 @@ const Main = ({menu}) => {
                 return <div/>
         }
     };
+    if (!currentUser){
+        history.push("/#/");
+        history.go();
+        return ('');
+    }
     return (
         <div className={classes.root}>
             <CssBaseline/>
@@ -55,7 +62,8 @@ const Main = ({menu}) => {
 };
 
 const mapStateToProps = state => ({
-    menu: state.menu
+    menu: state.menu,
+    currentUser: state.currentUser
 });
 
 export default connect(

@@ -8,6 +8,7 @@ import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react';
 import SignIn from "./containers/SignIn";
 import SignUp from "./containers/SignUp";
+import Redirect from "react-router-dom/es/Redirect";
 
 export const App = () => {
     return <Provider store={store}>
@@ -16,6 +17,7 @@ export const App = () => {
                 <Route exact path='/' component={SignIn}/>
                 <Route exact path='/registration' component={SignUp}/>
                 <Route path='/main' component={Main}/>
+                {/*<Route path='/main' component={Main}>{store.currentUser ? <Main/> : <Redirect to="/"/>}</Route>*/}
             </HashRouter>
         </PersistGate>
     </Provider>
