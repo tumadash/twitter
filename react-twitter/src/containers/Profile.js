@@ -140,7 +140,8 @@ const Profile = ({currentUser, editUser, setCurrentUser}) => {
             password,
             gender: currentUser.gender,
             city: currentUser.city,
-            about: currentUser.about
+            about: currentUser.about,
+            userAvatar: currentUser.userAvatar
         };
         editUser(newUser);
         setCurrentUser(newUser);
@@ -154,7 +155,8 @@ const Profile = ({currentUser, editUser, setCurrentUser}) => {
             password: currentUser.password,
             gender,
             city,
-            about
+            about,
+            userAvatar: currentUser.userAvatar
         };
         editUser(newUser);
         setCurrentUser(newUser);

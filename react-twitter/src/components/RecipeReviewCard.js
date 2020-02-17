@@ -41,9 +41,14 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const RecipeReviewCard = ({newsItem, like, dislike, currentUser, deleteNews}) => {
+const RecipeReviewCard = ({newsItem, like, dislike, currentUser, deleteNews, users}) => {
     const classes = useStyles();
+    let userNews = newsItem.user;
     let likeParam = false;
+    const index = users.map((e) => e.email).indexOf(newsItem.user.email);
+    if (~index) {
+        userNews = users[index];
+    }
     if (newsItem.followers.includes(currentUser.email)) {
         likeParam = true;
     }
@@ -78,12 +83,12 @@ const RecipeReviewCard = ({newsItem, like, dislike, currentUser, deleteNews}) =>
         <Card className={classes.root}>
             <CardHeader
                 avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar} src={newsItem.user.userAvatar}/>
+                    <Avatar aria-label="recipe" className={classes.avatar} src={userNews.userAvatar}/>
                 }
-                title={newsItem.user.lastName + ' ' + newsItem.user.firstName}
+                title={userNews.lastName + ' ' + userNews.firstName}
                 subheader={formatDate(newsItem.date)}
                 action={
-                    newsItem.user.email === currentUser.email ?
+                    userNews.email === currentUser.email ?
                     <IconButton aria-label="settings" onClick={deleteNewsEvent}>
                         <CloseIcon />
                     </IconButton> : ''
@@ -110,7 +115,8 @@ const RecipeReviewCard = ({newsItem, like, dislike, currentUser, deleteNews}) =>
     );
 }
 const mapStateToProps = state => ({
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    users: state.users
 });
 
 const mapDispatchToProps = dispatch => ({
