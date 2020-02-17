@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export const Menu = ({isOpen, handleDrawerClose}) => {
+export const Menu = ({isOpen, handleDrawerClose, setProfileUser}) => {
     const classes = useStyles();
     return <Drawer
         variant="permanent"
@@ -65,6 +65,6 @@ export const Menu = ({isOpen, handleDrawerClose}) => {
             </IconButton>
         </div>
         <Divider/>
-        <List><MenuButtons/></List>
+        <List><MenuButtons setProfileUser={setProfileUser}/></List>
     </Drawer>
 };

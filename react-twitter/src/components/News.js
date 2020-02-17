@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
         height: '60px'
     }
 }));
-const News = ({news, setOpen}) => {
+const News = ({news, setOpen, setProfileUser}) => {
     const classes = useStyles();
 
     const handleClickOpen = () => {
@@ -40,7 +40,7 @@ const News = ({news, setOpen}) => {
         <NewPost/>
         <Grid>
             {news.length !== 0 ? news.map((value) => (
-                    <Grid key={value.id}><RecipeReviewCard newsItem={value}/></Grid>)) :
+                    <Grid key={value.id}><RecipeReviewCard newsItem={value} setProfileUser={setProfileUser}/></Grid>)) :
                 <Typography variant={"h3"} className={classes.empty}>There will be news</Typography>}
         </Grid>
     </div>);

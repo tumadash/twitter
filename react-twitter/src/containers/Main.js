@@ -9,6 +9,9 @@ import Profile from "./Profile";
 import Home from "./Home";
 import Explore from "./Explore";
 import history from "../service/history";
+import {editUser} from "../store/users/actions";
+import {setCurrentUser} from "../store/currentUser/actions";
+import {setStateMenu} from "../store/stateMenu/actions";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,24 +26,33 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Main = ({menu, currentUser}) => {
+const Main = ({menu, currentUser, setCurrentUser, editUser, setStateMenu}) => {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
+    const [user, setUser] = React.useState(currentUser);
     const handleDrawerOpen = () => {
         setOpen(true);
     };
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    const setCurrentUserEvent = (user) => { //установка отредактируемого юзера на место текущего
+        setCurrentUser(user);
+        setUser(user);
+    };
+    const setProfileUser = (user) => { //переход на профиль другого юзера
+        setUser(user);
+        setStateMenu(PROFILE);
+    };
     const getContainer = () => {
         switch (menu) {
             case HOME:
-                return <Home/>;
+                return <Home setProfileUser={setProfileUser}/>;
             case EXPLORE:
-                return <Explore/>;
+                return <Explore setProfileUser={setProfileUser}/>;
             case PROFILE:
-                return <Profile/>;
+                return <Profile user={user} setCurrentUser={setCurrentUserEvent} editUser={editUser}/>;
             default:
                 return <div/>
         }
@@ -54,7 +66,7 @@ const Main = ({menu, currentUser}) => {
         <div className={classes.root}>
             <CssBaseline/>
             <HeaderPanel isOpen={open} handleDrawerOpen={handleDrawerOpen}/>
-            <Menu isOpen={open} handleDrawerClose={handleDrawerClose}/>
+            <Menu setProfileUser={setProfileUser} isOpen={open} handleDrawerClose={handleDrawerClose}/>
             <main className={classes.content}>
                 {getContainer()}
             </main>
@@ -66,7 +78,14 @@ const mapStateToProps = state => ({
     currentUser: state.currentUser
 });
 
+const mapDispatchToProps = dispatch => ({
+    editUser: user => dispatch(editUser(user)),
+    setCurrentUser: user => dispatch(setCurrentUser(user)),
+    setStateMenu: state => dispatch(setStateMenu(state))
+});
+
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(Main);
 

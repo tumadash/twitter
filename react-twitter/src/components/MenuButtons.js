@@ -9,7 +9,7 @@ import {EXPLORE, HOME, PROFILE, OUT} from "../store/stateMenu/enum";
 import history from "../service/history";
 import {setCurrentUser} from "../store/currentUser/actions";
 
-const MenuButtons = ({setStateMenu, setCurrentUser}) => {
+const MenuButtons = ({setStateMenu, setCurrentUser, setProfileUser, currentUser}) => {
 
     const out = () => {
         setCurrentUser(null);
@@ -19,7 +19,7 @@ const MenuButtons = ({setStateMenu, setCurrentUser}) => {
 
     return (<div>
         <ListItem button onClick={() => {
-            setStateMenu(PROFILE)
+            setProfileUser(currentUser)
         }}>
             <ListItemIcon>
                 <Person/>
@@ -52,7 +52,9 @@ const MenuButtons = ({setStateMenu, setCurrentUser}) => {
 };
 
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    currentUser: state.currentUser
+});
 
 const mapDispatchToProps = dispatch => ({
     setStateMenu: state => dispatch(setStateMenu(state)),

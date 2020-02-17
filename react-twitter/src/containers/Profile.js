@@ -10,8 +10,6 @@ import {connect} from "react-redux";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
-import {editUser} from "../store/users/actions";
-import {setCurrentUser} from "../store/currentUser/actions";
 
 const useStyles = makeStyles(theme => ({
     avatar: {
@@ -75,19 +73,22 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Profile = ({currentUser, editUser, setCurrentUser}) => {
+const Profile = ({user, editUser, setCurrentUser, currentUser}) => {
+
     const classes = useStyles();
+    const edit = (currentUser.email === user.email);
 
-    let [userAvatar, setUserAvatarState] = useState(currentUser.userAvatar);
+    let [userAvatar, setUserAvatarState] = useState(user.userAvatar);
 
-    let [firstName, setFirstNameState] = useState(currentUser.firstName);
-    let [lastName, setLastNameState] = useState(currentUser.lastName);
-    let [email, setEmailState] = useState(currentUser.email);
-    let [password, setPasswordState] = useState(currentUser.password);
+    let [firstName, setFirstNameState] = useState(user.firstName);
+    let [lastName, setLastNameState] = useState(user.lastName);
+    let [email, setEmailState] = useState(user.email);
+    let [password, setPasswordState] = useState(user.password);
 
-    let [gender, setGenderState] = useState(currentUser.gender);
-    let [city, setCityState] = useState(currentUser.city);
-    let [about, setAboutState] = useState(currentUser.about);
+    let [gender, setGenderState] = useState(user.gender);
+    let [city, setCityState] = useState(user.city);
+    let [about, setAboutState] = useState(user.about);
+
 
     const setUserAvatar = ({target}) => {
         const fileReader = new FileReader();
@@ -95,13 +96,13 @@ const Profile = ({currentUser, editUser, setCurrentUser}) => {
         fileReader.onload = (e) => {
             setUserAvatarState(e.target.result);
             const newUser = {
-                firstName: currentUser.firstName,
-                lastName: currentUser.lastName,
-                email: currentUser.email,
-                password: currentUser.password,
-                gender: currentUser.gender,
-                city: currentUser.city,
-                about: currentUser.about,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                password: user.password,
+                gender: user.gender,
+                city: user.city,
+                about: user.about,
                 userAvatar: e.target.result
             };
             editUser(newUser);
@@ -138,10 +139,10 @@ const Profile = ({currentUser, editUser, setCurrentUser}) => {
             lastName,
             email,
             password,
-            gender: currentUser.gender,
-            city: currentUser.city,
-            about: currentUser.about,
-            userAvatar: currentUser.userAvatar
+            gender: user.gender,
+            city: user.city,
+            about: user.about,
+            userAvatar: user.userAvatar
         };
         editUser(newUser);
         setCurrentUser(newUser);
@@ -149,14 +150,14 @@ const Profile = ({currentUser, editUser, setCurrentUser}) => {
 
     const saveAdditional = () => {
         const newUser = {
-            firstName: currentUser.firstName,
-            lastName: currentUser.lastName,
-            email: currentUser.email,
-            password: currentUser.password,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            password: user.password,
             gender,
             city,
             about,
-            userAvatar: currentUser.userAvatar
+            userAvatar: user.userAvatar
         };
         editUser(newUser);
         setCurrentUser(newUser);
@@ -166,7 +167,7 @@ const Profile = ({currentUser, editUser, setCurrentUser}) => {
         <Container className={classes.header}><Avatar
             src={userAvatar}
             className={classes.avatar}/>
-            <Button
+            {edit ? <Button
                 variant="contained" color="primary"
                 component="label"
                 className={classes.changePhotoButton}
@@ -178,13 +179,13 @@ const Profile = ({currentUser, editUser, setCurrentUser}) => {
                     type="file"
                     style={{display: "none"}}
                 />
-            </Button>
+            </Button> : ''}
             <Typography align="center" variant={"h4"}
-                        className={classes.username}>{currentUser.lastName} {currentUser.firstName}</Typography>
+                        className={classes.username}>{user.lastName} {user.firstName}</Typography>
             <Typography align="center" variant={"h6"}
-                        className={classes.status}>{currentUser.about ? currentUser.about : "_____________________"}</Typography>
+                        className={classes.status}>{user.about ? user.about : "_____________________"}</Typography>
         </Container>
-        <Container className={classes.bodyContainer}>
+        {edit ? <Container className={classes.bodyContainer}>
             <Paper className={classes.info}>
                 <Typography align="center" variant={"h6"} className={classes.panel}>Basic information</Typography>
                 <div><TextField className={classes.input} label={"First Name"} value={firstName}
@@ -202,8 +203,8 @@ const Profile = ({currentUser, editUser, setCurrentUser}) => {
             <Paper className={classes.info}>
                 <Typography align="center" variant={"h6"} className={classes.panel}>Additional information</Typography>
                 <div><RadioGroup defaultValue={gender} onChange={setGender} row>
-                    <FormControlLabel control={<Radio></Radio>} label={'female'} value={'female'}></FormControlLabel>
-                    <FormControlLabel control={<Radio></Radio>} label={'male'} value={'male'}></FormControlLabel>
+                    <FormControlLabel control={<Radio></Radio>} label={'female'} value={'female'}/>
+                    <FormControlLabel control={<Radio></Radio>} label={'male'} value={'male'}/>
                 </RadioGroup></div>
                 <div><TextField className={classes.input} label={"City"} value={city} onChange={setCity}/></div>
                 <div><TextField className={classes.input} label={"About"} multiline={true} rows={3}
@@ -215,7 +216,12 @@ const Profile = ({currentUser, editUser, setCurrentUser}) => {
                                                         startIcon={<SaveIcon/>} onClick={saveAdditional}>Save</Button>
                 </div>
             </Paper>
-        </Container>
+        </Container> : <div>
+            <Typography align="center" variant={"h6"}
+                        className={classes.username}> gender: {user.gender}</Typography>
+            <Typography align="center" variant={"h6"}
+                        className={classes.username}>City: {user.city}</Typography>
+        </div>}
     </Container>);
 };
 
@@ -223,14 +229,8 @@ const mapStateToProps = state => ({
     currentUser: state.currentUser
 });
 
-const mapDispatchToProps = dispatch => ({
-    editUser: user => dispatch(editUser(user)),
-    setCurrentUser: user => dispatch(setCurrentUser(user)),
-});
-
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
 )(Profile);
 
 

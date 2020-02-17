@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const RecipeReviewCard = ({newsItem, like, dislike, currentUser, deleteNews, users}) => {
+const RecipeReviewCard = ({newsItem, like, dislike, currentUser, deleteNews, users, setProfileUser}) => {
     const classes = useStyles();
     let userNews = newsItem.user;
     let likeParam = false;
@@ -82,6 +82,7 @@ const RecipeReviewCard = ({newsItem, like, dislike, currentUser, deleteNews, use
     return (
         <Card className={classes.root}>
             <CardHeader
+                onClick={()=>{setProfileUser(userNews)}}
                 avatar={
                     <Avatar aria-label="recipe" className={classes.avatar} src={userNews.userAvatar}/>
                 }
