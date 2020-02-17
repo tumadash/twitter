@@ -66,11 +66,19 @@ const useStyles = makeStyles(theme => ({
     },
     saveButton: {
         marginTop: 'auto'
+    },
+    changePhotoButton: {
+        margin: '10px auto',
+        alignItems: 'center',
+        display: 'flex',
+        maxWidth: '200px'
     }
 }));
 
 const Profile = ({currentUser, editUser, setCurrentUser}) => {
     const classes = useStyles();
+
+    let [userAvatar, setUserAvatarState] = useState(currentUser.userAvatar);
 
     let [firstName, setFirstNameState] = useState(currentUser.firstName);
     let [lastName, setLastNameState] = useState(currentUser.lastName);
@@ -81,6 +89,26 @@ const Profile = ({currentUser, editUser, setCurrentUser}) => {
     let [city, setCityState] = useState(currentUser.city);
     let [about, setAboutState] = useState(currentUser.about);
 
+    const setUserAvatar = ({target}) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(target.files[0]);
+        fileReader.onload = (e) => {
+            setUserAvatarState(e.target.result);
+            const newUser = {
+                firstName: currentUser.firstName,
+                lastName: currentUser.lastName,
+                email: currentUser.email,
+                password: currentUser.password,
+                gender: currentUser.gender,
+                city: currentUser.city,
+                about: currentUser.about,
+                userAvatar: e.target.result
+            };
+            editUser(newUser);
+            setCurrentUser(newUser);
+        };
+
+    };
     const setLastName = (e) => {
         setLastNameState(e.target.value)
     };
@@ -134,8 +162,21 @@ const Profile = ({currentUser, editUser, setCurrentUser}) => {
 
     return (<Container className={classes.headContainer}>
         <Container className={classes.header}><Avatar
-            src="https://kbdevstorage1.blob.core.windows.net/asset-blobs/19852_en_1"
+            src={userAvatar}
             className={classes.avatar}/>
+            <Button
+                variant="contained" color="primary"
+                component="label"
+                className={classes.changePhotoButton}
+            >
+                Change photo
+                <input
+                    onChange={setUserAvatar}
+                    accept="image/*"
+                    type="file"
+                    style={{display: "none"}}
+                />
+            </Button>
             <Typography align="center" variant={"h4"}
                         className={classes.username}>{currentUser.lastName} {currentUser.firstName}</Typography>
             <Typography align="center" variant={"h6"}
@@ -148,7 +189,8 @@ const Profile = ({currentUser, editUser, setCurrentUser}) => {
                                 onChange={setFirstName}/></div>
                 <div><TextField className={classes.input} label={"Last Name"} value={lastName} onChange={setLastName}/>
                 </div>
-                <div><TextField className={classes.input} disabled label={"E-mail"} value={email} onChange={setEmail}/></div>
+                <div><TextField className={classes.input} disabled label={"E-mail"} value={email} onChange={setEmail}/>
+                </div>
                 <div><TextField className={classes.input} label={"Password"} type={"password"} value={password}
                                 onChange={setPassword}/></div>
                 <div className={classes.footer}><Button className={classes.saveButton} variant={'contained'}
@@ -162,7 +204,8 @@ const Profile = ({currentUser, editUser, setCurrentUser}) => {
                     <FormControlLabel control={<Radio></Radio>} label={'male'} value={'male'}></FormControlLabel>
                 </RadioGroup></div>
                 <div><TextField className={classes.input} label={"City"} value={city} onChange={setCity}/></div>
-                <div><TextField className={classes.input} label={"About"} multiline={true} rows={3} inputProps={{maxLength:250}}  value={about}
+                <div><TextField className={classes.input} label={"About"} multiline={true} rows={3}
+                                inputProps={{maxLength: 250}} value={about}
                                 onChange={setAbout}/>
                 </div>
                 <div className={classes.footer}><Button className={classes.saveButton} variant={'contained'}

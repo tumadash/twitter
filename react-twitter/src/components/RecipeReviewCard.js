@@ -78,9 +78,7 @@ const RecipeReviewCard = ({newsItem, like, dislike, currentUser, deleteNews}) =>
         <Card className={classes.root}>
             <CardHeader
                 avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
-                        {newsItem.user.avatar}
-                    </Avatar>
+                    <Avatar aria-label="recipe" className={classes.avatar} src={newsItem.user.userAvatar}/>
                 }
                 title={newsItem.user.lastName + ' ' + newsItem.user.firstName}
                 subheader={formatDate(newsItem.date)}
