@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {ButtonGroup, Text} from 'react-native-elements';
 import {ProfileScreen} from "./Profile";
-import {Home} from "./Home";
-import {Explore} from "./Explore";
+import Home from "./Home";
+import Explore from "./Explore";
 
 // const useStyles = StyleSheet.create({
 //   root: {

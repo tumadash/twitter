@@ -1,9 +1,15 @@
 import React from 'react';
 import {News} from "./News";
+import {connect} from "react-redux";
 
 
-export const Explore = ({list}) => {
-    return (
-        <News list={[0,1,2]} />
-    );
+const Explore = ({news, setProfileUser}) => {
+    return (<News news={news} setProfileUser={setProfileUser}/>);
 };
+const mapStateToProps = state => ({
+    news: state.news
+});
+
+export default connect(
+    mapStateToProps
+)(Explore);
