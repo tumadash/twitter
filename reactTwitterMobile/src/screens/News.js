@@ -4,6 +4,7 @@ import {Button, Card, Icon, Image, ListItem} from 'react-native-elements';
 import Text from "react-native-elements/src/text/Text";
 import {connect} from "react-redux";
 import {deleteNews, dislike, like} from "../store/news/actions";
+import {setStateMenu} from "../store/stateMenu/actions";
 
 const formatDate = (date) => {
     date = new Date(date);
@@ -39,7 +40,6 @@ const renderListNewsItem = (newsItem, currentUser, deleteNews, dislike, like) =>
             } :
             ''
     };
-    console.log(1321,newsItem.user)
     return (<>
         <Card>
             <ListItem containerStyle={styles.title} leftAvatar={{source: newsItem.user.userAvatar}}
@@ -81,7 +81,9 @@ const News = ({list, navigation, currentUser, deleteNews, dislike, like}) => {
 const mapDispatchToProps = dispatch => ({
     deleteNews: guest => dispatch(deleteNews(guest)),
     like: state => dispatch(like(state)),
-    dislike: state => dispatch(dislike(state))
+    dislike: state => dispatch(dislike(state)),
+    setStateMenu: state => dispatch(setStateMenu(state))
+
 });
 
 const styles = StyleSheet.create({

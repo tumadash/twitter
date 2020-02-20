@@ -1,5 +1,5 @@
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {Main} from "./screens/Main";
+import Main from "./screens/Main";
 import NewPost from "./screens/NewPost";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
