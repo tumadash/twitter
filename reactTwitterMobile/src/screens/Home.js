@@ -2,12 +2,12 @@ import React from 'react';
 import {News} from "./News";
 import {connect} from "react-redux";
 
-const Home = ({news, currentUser}) => {
+const Home = ({news, currentUser, navigation}) => {
     const userNews = news.filter(
         news => news.user.email === currentUser.email
     );
     return (
-        <News list={userNews}/>
+        <News list={userNews} navigation={navigation}/>
     );
 };
 const mapStateToProps = state => ({

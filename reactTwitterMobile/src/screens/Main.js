@@ -20,7 +20,7 @@ const PROFILE = 'PROFILE';
 const HOME = 'HOME';
 const EXPLORE = 'EXPLORE';
 
-export const Main = ({}) => {
+export const Main = ({navigation}) => {
   const [selectedIndex, updateIndex] = useState(0);
   const [stateMenu, setStateMenu] = useState(0);
   const component1 = () => <Text>Profile</Text>;
@@ -31,6 +31,7 @@ export const Main = ({}) => {
     {element: component2},
     {element: component3},
   ];
+
   return (
     <>
       <ButtonGroup
@@ -39,8 +40,8 @@ export const Main = ({}) => {
         buttons={buttons}
       />
       {stateMenu === PROFILE ? <ProfileScreen /> : <></>}
-      {stateMenu === HOME ? <Home /> : <></>}
-      {stateMenu === EXPLORE ? <Explore /> : <></>}
+      {stateMenu === HOME ? <Home  navigation={navigation}/> : <></>}
+      {stateMenu === EXPLORE ? <Explore navigation={navigation}/> : <></>}
     </>
   );
 

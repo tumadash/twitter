@@ -14,25 +14,32 @@ const formatDate = (date) => {
     return date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear();
 };
 
-const renderListNewsItem = (newsItem) => (
-  <>
-    <Card title={<Text>{newsItem.user.lastName + ' ' + newsItem.user.firstName}<br/>{formatDate(newsItem.date)}</Text>} image={newsItem.image}>
-        <Text>{newsItem.text}</Text>
-    </Card>
-  </>
-);
+const renderListNewsItem = (newsItem) => {
+    console.log(newsItem);
+    return (<>
+        <Card title={<Text>{newsItem.user.lastName + ' ' + newsItem.user.firstName}{'\n'}{formatDate(newsItem.date)}
+        </Text>} image={newsItem.image}>
+            <Text>{newsItem.text}</Text>
+        </Card>
+    </>);
+};
 
-export const News = ({list}) => {
-  return (
-    <SafeAreaView style={{flex: 1}}>
-        <Button
-            title="Add news"
-        />
-      <FlatList
-        data={list}
-        renderItem={({newsItem}) => renderListNewsItem(newsItem)}
-        keyExtractor={newsItem => newsItem.id}
-      />
-    </SafeAreaView>
-  );
+export const News = ({list, navigation}) => {
+    const goNewPost = () => {
+        navigation.navigate('NewPost');
+    };
+
+    return (
+        <SafeAreaView style={{flex: 1}}>
+            <Button
+                title="Add news"
+                onPress={goNewPost}
+            />
+            <FlatList
+                data={list}
+                renderItem={({item}) => renderListNewsItem(item)}
+                keyExtractor={newsItem => newsItem.date}
+            />
+        </SafeAreaView>
+    );
 };
