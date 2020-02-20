@@ -1,7 +1,8 @@
 import React from 'react';
 import {FlatList, SafeAreaView} from 'react-native';
-import {Button, Card} from 'react-native-elements';
+import {Button, Card, Icon, ListItem} from 'react-native-elements';
 import Text from "react-native-elements/src/text/Text";
+import {connect} from "react-redux";
 
 const formatDate = (date) => {
     date = new Date(date);
@@ -14,17 +15,24 @@ const formatDate = (date) => {
     return date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear();
 };
 
-const renderListNewsItem = (newsItem) => {
+const renderListNewsItem = (newsItem, currentUser) => {
     console.log(newsItem);
+    const setIcon = (currentUser, newsItem) => {
+        // return currentUser.email === newsItem.user.email ?
+        //     {rightIcon: <Icon name="close" color="black"/>} :
+        //     ''
+        return {rightIcon: <Icon name="close" color="black"/>};
+    };
     return (<>
-        <Card title={<Text>{newsItem.user.lastName + ' ' + newsItem.user.firstName}{'\n'}{formatDate(newsItem.date)}
-        </Text>} image={newsItem.image}>
+        <Card>
+            <ListItem leftAvatar={{title: 'MD'}} title={newsItem.user.lastName + ' ' + newsItem.user.firstName}
+                      subtitle={formatDate(newsItem.date)} {...setIcon()}/>
             <Text>{newsItem.text}</Text>
         </Card>
     </>);
 };
 
-export const News = ({list, navigation}) => {
+export const News = ({list, navigation, currentUser}) => {
     const goNewPost = () => {
         navigation.navigate('NewPost');
     };
@@ -37,9 +45,16 @@ export const News = ({list, navigation}) => {
             />
             <FlatList
                 data={list}
-                renderItem={({item}) => renderListNewsItem(item)}
+                renderItem={({item}) => renderListNewsItem(item, currentUser)}
                 keyExtractor={newsItem => newsItem.date}
             />
         </SafeAreaView>
     );
 };
+
+const mapStateToProps = state => ({
+    currentUser: state.currentUser
+});
+export default connect(
+    mapStateToProps
+)(News);
