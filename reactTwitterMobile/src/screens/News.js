@@ -1,9 +1,9 @@
-import React from 'react';
-import {FlatList, SafeAreaView} from 'react-native';
+import React, {useState} from 'react';
+import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import {Button, Card, Icon, ListItem} from 'react-native-elements';
 import Text from "react-native-elements/src/text/Text";
 import {connect} from "react-redux";
-import {addNews, deleteNews} from "../store/news/actions";
+import {addNews, deleteNews, dislike, like} from "../store/news/actions";
 
 const formatDate = (date) => {
     date = new Date(date);
@@ -16,22 +16,44 @@ const formatDate = (date) => {
     return date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear();
 };
 
-const renderListNewsItem = (newsItem, currentUser, deleteNews) => {
+const renderListNewsItem = (newsItem, currentUser, deleteNews, dislike, like) => {
+    let isLike = false;
+    if (newsItem.followers.includes(currentUser.email)) {
+        isLike = true;
+    }
+    const setLikeEvent = () => {
+        if (isLike) {
+            dislike({email: currentUser.email, id: newsItem.id});
+            isLike = false;
+        } else {
+            like({email: currentUser.email, id: newsItem.id});
+            isLike = true;
+        }
+    };
     const setIcon = () => {
         return currentUser.email === newsItem.user.email ?
-            {rightIcon: <Icon name="close" color="black" onPress={()=>{deleteNews(newsItem.id)}}/>} :
+            {
+                rightIcon: <Icon name="close" color="black" onPress={() => {
+                    deleteNews(newsItem.id)
+                }}/>
+            } :
             ''
     };
     return (<>
         <Card>
-            <ListItem leftAvatar={{title: 'MD'}} title={newsItem.user.lastName + ' ' + newsItem.user.firstName}
+            <ListItem containerStyle={styles.title} leftAvatar={{title: 'MD'}}
+                      title={newsItem.user.lastName + ' ' + newsItem.user.firstName}
                       subtitle={formatDate(newsItem.date)} {...setIcon()}/>
             <Text>{newsItem.text}</Text>
+            <View style={styles.footer}>
+                <Icon iconStyle={styles.heart} name="heart" type="evilicon" color={isLike ? 'red' : 'black'} onPress={setLikeEvent}/>
+                <Text style={styles.heart}>{newsItem.followers.length}</Text>
+            </View>
         </Card>
     </>);
 };
 
-const News = ({list, navigation, currentUser, deleteNews}) => {
+const News = ({list, navigation, currentUser, deleteNews, dislike, like}) => {
     const goNewPost = () => {
         navigation.navigate('NewPost');
     };
@@ -44,14 +66,33 @@ const News = ({list, navigation, currentUser, deleteNews}) => {
             />
             <FlatList
                 data={list}
-                renderItem={({item}) => renderListNewsItem(item, currentUser, deleteNews)}
+                renderItem={({item}) => renderListNewsItem(item, currentUser, deleteNews, dislike, like)}
                 keyExtractor={newsItem => newsItem.date}
             />
         </SafeAreaView>
     );
 };
 const mapDispatchToProps = dispatch => ({
-    deleteNews: guest => dispatch(deleteNews(guest))
+    deleteNews: guest => dispatch(deleteNews(guest)),
+    like: state => dispatch(like(state)),
+    dislike: state => dispatch(dislike(state))
+});
+
+const styles = StyleSheet.create({
+    title: {
+        padding: 0,
+        paddingBottom: 10
+    },
+    heart: {
+        marginRight: 10,
+        marginTop: 5,
+        width: 20,
+    },
+    footer: {
+        display: "flex",
+        flexWrap: 'nowrap',
+        flexDirection:'row'
+    }
 });
 
 const mapStateToProps = state => ({
