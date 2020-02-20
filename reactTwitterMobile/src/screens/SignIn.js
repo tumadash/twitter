@@ -39,10 +39,15 @@ const IMG = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIA
 //     },
 // }));
 
-const SignIn = ({navigation, users, setCurrentUser}) => {
+const SignIn = ({navigation, users, setCurrentUser, currentUser}) => {
     // const classes = useStyles();
     let error = false;
 
+
+    if (currentUser.email) {
+        console.log(1, currentUser);
+        navigation.navigate('Main');
+    }
     let [email, setEmail] = useState(undefined);
     let [password, setPassword] = useState(undefined);
 
@@ -53,7 +58,7 @@ const SignIn = ({navigation, users, setCurrentUser}) => {
         })[0];
         if (user && user.password === password) {
             setCurrentUser(user);
-            navigation.navigate('Main')
+            navigation.navigate('Main');
         } else {
             error = true;
         }
@@ -96,7 +101,8 @@ const SignIn = ({navigation, users, setCurrentUser}) => {
 };
 
 const mapStateToProps = state => ({
-    users: state.users
+    users: state.users,
+    currentUser: state.currentUser
 });
 
 const mapDispatchToProps = dispatch => ({

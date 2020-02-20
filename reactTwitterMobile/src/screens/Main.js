@@ -22,7 +22,7 @@ const EXPLORE = 'EXPLORE';
 
 export const Main = ({navigation}) => {
   const [selectedIndex, updateIndex] = useState(0);
-  const [stateMenu, setStateMenu] = useState(0);
+  const [stateMenu, setStateMenu] = useState(PROFILE);
   const component1 = () => <Text>Profile</Text>;
   const component2 = () => <Text>Home</Text>;
   const component3 = () => <Text>Explore</Text>;
