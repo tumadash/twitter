@@ -1,5 +1,5 @@
 import React from 'react';
-import {News} from "./News";
+import News from "./News";
 import {connect} from "react-redux";
 
 const Home = ({news, currentUser, navigation}) => {

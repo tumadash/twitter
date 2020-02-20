@@ -12,6 +12,7 @@ const NewPost = ({navigation, currentUser, addNews}) => {
         const id = date + currentUser.email;
         const news = {id, image:null, text, date, user: currentUser, followers: []};
         addNews(news);
+        navigation.navigate('Main');
     };
     const goMain = () => {
         navigation.navigate('Main');

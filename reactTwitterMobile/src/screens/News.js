@@ -3,6 +3,7 @@ import {FlatList, SafeAreaView} from 'react-native';
 import {Button, Card, Icon, ListItem} from 'react-native-elements';
 import Text from "react-native-elements/src/text/Text";
 import {connect} from "react-redux";
+import {addNews, deleteNews} from "../store/news/actions";
 
 const formatDate = (date) => {
     date = new Date(date);
@@ -15,13 +16,11 @@ const formatDate = (date) => {
     return date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear();
 };
 
-const renderListNewsItem = (newsItem, currentUser) => {
-    console.log(newsItem);
-    const setIcon = (currentUser, newsItem) => {
-        // return currentUser.email === newsItem.user.email ?
-        //     {rightIcon: <Icon name="close" color="black"/>} :
-        //     ''
-        return {rightIcon: <Icon name="close" color="black"/>};
+const renderListNewsItem = (newsItem, currentUser, deleteNews) => {
+    const setIcon = () => {
+        return currentUser.email === newsItem.user.email ?
+            {rightIcon: <Icon name="close" color="black" onPress={()=>{deleteNews(newsItem.id)}}/>} :
+            ''
     };
     return (<>
         <Card>
@@ -32,7 +31,7 @@ const renderListNewsItem = (newsItem, currentUser) => {
     </>);
 };
 
-export const News = ({list, navigation, currentUser}) => {
+const News = ({list, navigation, currentUser, deleteNews}) => {
     const goNewPost = () => {
         navigation.navigate('NewPost');
     };
@@ -45,16 +44,20 @@ export const News = ({list, navigation, currentUser}) => {
             />
             <FlatList
                 data={list}
-                renderItem={({item}) => renderListNewsItem(item, currentUser)}
+                renderItem={({item}) => renderListNewsItem(item, currentUser, deleteNews)}
                 keyExtractor={newsItem => newsItem.date}
             />
         </SafeAreaView>
     );
 };
+const mapDispatchToProps = dispatch => ({
+    deleteNews: guest => dispatch(deleteNews(guest))
+});
 
 const mapStateToProps = state => ({
     currentUser: state.currentUser
 });
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(News);

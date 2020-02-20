@@ -39,7 +39,7 @@ export const Main = ({navigation}) => {
         selectedIndex={selectedIndex}
         buttons={buttons}
       />
-      {stateMenu === PROFILE ? <ProfileScreen /> : <></>}
+      {stateMenu === PROFILE ? <ProfileScreen navigation={navigation}/> : <></>}
       {stateMenu === HOME ? <Home  navigation={navigation}/> : <></>}
       {stateMenu === EXPLORE ? <Explore navigation={navigation}/> : <></>}
     </>
