@@ -36,6 +36,7 @@ const ProfileScreen = ({currentUser, navigation, setCurrentUser}) => {
         ImagePickerLib.showImagePicker(options, response => {
             if (response.uri) {
                 setUserAvatarState({uri: response.uri});
+                save();
             }
             console.log(response);
         });

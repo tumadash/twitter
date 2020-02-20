@@ -39,16 +39,17 @@ const renderListNewsItem = (newsItem, currentUser, deleteNews, dislike, like) =>
             } :
             ''
     };
+    console.log(1321,newsItem.user)
     return (<>
         <Card>
-            <ListItem containerStyle={styles.title} leftAvatar={{title: 'MD'}}
+            <ListItem containerStyle={styles.title} leftAvatar={{source: newsItem.user.userAvatar}}
                       title={newsItem.user.lastName + ' ' + newsItem.user.firstName}
                       subtitle={formatDate(newsItem.date)} {...setIcon()}/>
-            <Image
+            { newsItem.image ? <Image
                 source={{ uri: newsItem.image }}
                 style={{ height: 200 }}
                 PlaceholderContent={<ActivityIndicator />}
-            />
+            /> : <View />}
             <Text>{newsItem.text}</Text>
             <View style={styles.footer}>
                 <Icon iconStyle={styles.heart} name="heart" type="evilicon" color={isLike ? 'red' : 'black'} onPress={setLikeEvent}/>

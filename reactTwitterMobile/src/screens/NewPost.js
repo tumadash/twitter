@@ -1,6 +1,14 @@
 import React, {useCallback, useState} from 'react';
-import {KeyboardAvoidingView, SafeAreaView, ScrollView, TextInput, View,} from 'react-native';
-import {Button, Icon} from 'react-native-elements';
+import {
+    ActivityIndicator,
+    KeyboardAvoidingView,
+    SafeAreaView,
+    ScrollView,
+    TextInput,
+    View,
+    StyleSheet
+} from 'react-native';
+import {Button, Icon, Image} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {addNews} from "../store/news/actions";
 import ImagePickerLib from 'react-native-image-picker';
@@ -18,7 +26,7 @@ const NewPost = ({navigation, currentUser, addNews}) => {
     const save = () => {
         const date = Date.now();
         const id = date + currentUser.email;
-        const news = {id, image:image, text, date, user: currentUser, followers: []};
+        const news = {id, image: image, text, date, user: currentUser, followers: []};
         addNews(news);
         navigation.navigate('Main');
     };
@@ -30,34 +38,40 @@ const NewPost = ({navigation, currentUser, addNews}) => {
             if (response.uri) {
                 setImage(response.uri);
             }
-            console.log(response);
         });
     }, [setImage]);
     return (
         <SafeAreaView>
             <KeyboardAvoidingView behavior="position">
                 <ScrollView keyboardShouldPersistTaps="always">
-                    <View>
+                    <View style={styles.container}>
                         <Button
-                            // buttonStyle={styles.guestButton}
+                            buttonStyle={styles.button}
                             icon={<Icon name="arrow-back" color="white"/>}
                             title="Back"
                             onPress={goMain}
                         />
+                        <Image
+                            source={{uri: image}}
+                            style={{height: image !== '' ? 200 : 0}}
+                            PlaceholderContent={<ActivityIndicator/>}
+                        />
                         <TextInput
+                            style={styles.textInput}
                             value={text}
                             onChangeText={setText}
-                            placeholder="Комментарий"
+                            placeholder="Text"
                             multiline={true}
                             numberOfLines={10}
                         />
                         <Button
+                            buttonStyle={styles.button}
                             icon={<Icon name="camera" color="white"/>}
                             title="Add image"
                             onPress={pickImage}
                         />
                         <Button
-                            // buttonStyle={styles.guestButton}
+                            buttonStyle={styles.button}
                             icon={<Icon name="save" color="white"/>}
                             title="Save"
                             onPress={save}
@@ -69,7 +83,21 @@ const NewPost = ({navigation, currentUser, addNews}) => {
     );
 };
 
-
+const styles = StyleSheet.create({
+    textInput: {
+        padding: 10,
+        marginTop: 10,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: '#7c7c7c'
+    },
+    container: {
+        margin: 10,
+    },
+    button: {
+        marginBottom: 10
+    },
+});
 
 const mapStateToProps = state => ({
     currentUser: state.currentUser
