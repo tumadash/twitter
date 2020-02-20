@@ -1,15 +1,4 @@
 import React, {useState} from 'react';
-// import Avatar from '@material-ui/core/Avatar';
-// import Button from '@material-ui/core/Button';
-// import CssBaseline from '@material-ui/core/CssBaseline';
-// import TextField from '@material-ui/core/TextField';
-// import Link from '@material-ui/core/Link';
-// import Box from '@material-ui/core/Box';
-// import Typography from '@material-ui/core/Typography';
-// import Container from '@material-ui/core/Container';
-// import history from "../service/history";
-// import Grid from "@material-ui/core/Grid";
-// import {Copyright} from "../components/Copyright";
 import {connect} from "react-redux";
 import {setCurrentUser} from "../store/currentUser/actions";
 import {Button, SafeAreaView, StyleSheet} from "react-native";

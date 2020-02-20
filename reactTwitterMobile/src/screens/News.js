@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
-import {Button, Card, Icon, ListItem} from 'react-native-elements';
+import React from 'react';
+import {ActivityIndicator, FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
+import {Button, Card, Icon, Image, ListItem} from 'react-native-elements';
 import Text from "react-native-elements/src/text/Text";
 import {connect} from "react-redux";
-import {addNews, deleteNews, dislike, like} from "../store/news/actions";
+import {deleteNews, dislike, like} from "../store/news/actions";
 
 const formatDate = (date) => {
     date = new Date(date);
@@ -44,6 +44,11 @@ const renderListNewsItem = (newsItem, currentUser, deleteNews, dislike, like) =>
             <ListItem containerStyle={styles.title} leftAvatar={{title: 'MD'}}
                       title={newsItem.user.lastName + ' ' + newsItem.user.firstName}
                       subtitle={formatDate(newsItem.date)} {...setIcon()}/>
+            <Image
+                source={{ uri: newsItem.image }}
+                style={{ height: 200 }}
+                PlaceholderContent={<ActivityIndicator />}
+            />
             <Text>{newsItem.text}</Text>
             <View style={styles.footer}>
                 <Icon iconStyle={styles.heart} name="heart" type="evilicon" color={isLike ? 'red' : 'black'} onPress={setLikeEvent}/>

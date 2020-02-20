@@ -4,18 +4,6 @@ import ProfileScreen from "./Profile";
 import Home from "./Home";
 import Explore from "./Explore";
 
-// const useStyles = StyleSheet.create({
-//   root: {
-//     display: 'flex',
-//   },
-//   appBarSpacer: theme.mixins.toolbar,
-//   content: {
-//     width: '100%',
-//     overflow: 'auto',
-//     marginTop: '64px',
-//     height: 'calc(100vh - 64px)',
-//   },
-// });
 const PROFILE = 'PROFILE';
 const HOME = 'HOME';
 const EXPLORE = 'EXPLORE';
